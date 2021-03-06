@@ -30,8 +30,8 @@
     data() {
       return {
         form_login: {
-          username: '123',
-          password : '123'
+          username: 'admin',
+          password : '123456'
         },
         login_rule: {
           username: [{required: true, message: '请输入用户名', trigger: 'blur'},
@@ -49,9 +49,11 @@
           if(!valid) return this.$message.error('密码与账号不能为空')
            const  {data:res} = await  reqLogin(this.form_login)
           console.log(res)
-              if(res.meta.status!==200) return this.$message.error('密码或账号错误')
+          if(res.meta.status!==200) return this.$message.error('密码或账号错误')
+           window.sessionStorage.setItem('token',res.data.token)
           this.$message.success('登录成功')
-             this.$router.push('/home')
+          this.$router.push('/home')
+
         });
       }
     }
